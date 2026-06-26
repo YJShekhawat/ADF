@@ -1,0 +1,60 @@
+{
+	"name": "ParamSqlServerTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"serverName": {
+					"value": "@dataset().datasetServer",
+					"type": "Expression"
+				},
+				"dbName": {
+					"value": "@dataset().datasetDb",
+					"type": "Expression"
+				},
+				"userName": {
+					"value": "@dataset().datasetUserName",
+					"type": "Expression"
+				},
+				"password": {
+					"value": "@dataset().datasetPassword",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"datasetServer": {
+				"type": "string"
+			},
+			"datasetDb": {
+				"type": "string"
+			},
+			"datasetUserName": {
+				"type": "string"
+			},
+			"datasetPassword": {
+				"type": "string"
+			},
+			"datasetDbo": {
+				"type": "string"
+			},
+			"datasetTable": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().datasetDbo",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().datasetTable",
+				"type": "Expression"
+			}
+		}
+	}
+}
