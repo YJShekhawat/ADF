@@ -15,6 +15,18 @@
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
 		},
+		"SqlServer1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().serverName}"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().dbName}"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().userName}"
+		},
 		"Event Based Trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
@@ -274,6 +286,39 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"serverName": {
+						"type": "string"
+					},
+					"dbName": {
+						"type": "string"
+					},
+					"userName": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SqlServer1_properties_typeProperties_server')]",
+					"database": "[parameters('SqlServer1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SqlServer1_properties_typeProperties_userName')]",
+					"password": "@{linkedService().password}"
 				}
 			},
 			"dependsOn": []

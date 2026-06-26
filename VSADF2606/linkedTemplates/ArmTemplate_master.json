@@ -15,6 +15,18 @@
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
 		},
+		"SqlServer1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().serverName}"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().dbName}"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().userName}"
+		},
 		"Event Based Trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
@@ -51,6 +63,15 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"SqlServer1_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_server')]"
+					},
+					"SqlServer1_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_database')]"
+					},
+					"SqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
 					},
 					"Event Based Trigger_properties_typeProperties_scope": {
 						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
