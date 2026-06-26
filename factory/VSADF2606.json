@@ -1,0 +1,15 @@
+{
+	"name": "VSADF2606",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "376d2625-eef5-4cc9-bd74-ea9a59145c56",
+		"tenantId": "25ebcd3a-e7ef-4d2c-a753-d991e913cda5"
+	}
+}
