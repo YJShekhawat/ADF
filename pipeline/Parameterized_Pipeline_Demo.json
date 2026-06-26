@@ -1,0 +1,129 @@
+{
+	"name": "Parameterized_Pipeline_Demo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ParamSqlServerTable",
+						"type": "DatasetReference",
+						"parameters": {
+							"datasetServer": {
+								"value": "@pipeline().parameters.serverNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetDb": {
+								"value": "@pipeline().parameters.dbNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetUserName": {
+								"value": "@pipeline().parameters.userNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetPassword": {
+								"value": "@pipeline().parameters.passwordNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetDbo": {
+								"value": "@pipeline().parameters.dboNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetTable": {
+								"value": "@pipeline().parameters.sourceTableNameFromPipeline",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ParamSqlServerTable",
+						"type": "DatasetReference",
+						"parameters": {
+							"datasetServer": {
+								"value": "@pipeline().parameters.serverNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetDb": {
+								"value": "@pipeline().parameters.dbNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetUserName": {
+								"value": "@pipeline().parameters.userNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetPassword": {
+								"value": "@pipeline().parameters.passwordNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetDbo": {
+								"value": "@pipeline().parameters.dboNameFromPipeline",
+								"type": "Expression"
+							},
+							"datasetTable": {
+								"value": "@pipeline().parameters.destinationTableNameFromPipeline",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"serverNameFromPipeline": {
+				"type": "string"
+			},
+			"dbNameFromPipeline": {
+				"type": "string"
+			},
+			"passwordNameFromPipeline": {
+				"type": "string"
+			},
+			"userNameFromPipeline": {
+				"type": "string"
+			},
+			"dboNameFromPipeline": {
+				"type": "string"
+			},
+			"sourceTableNameFromPipeline": {
+				"type": "string"
+			},
+			"destinationTableNameFromPipeline": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
