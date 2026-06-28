@@ -19,6 +19,13 @@
 						"referenceName": "Output_CSV_DataSet_data_csv",
 						"type": "DatasetReference"
 					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "adfdemo/errorlog"
+					},
 					"enableLogging": true,
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
