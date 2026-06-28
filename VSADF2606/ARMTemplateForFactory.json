@@ -45,6 +45,57 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Delete_Activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Output_CSV_DataSet_data_csv",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureDataLakeStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"path": "adfdemo/errorlog"
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"wildcardFileName": "*.csv",
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Event Base Triggers Demo')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -129,6 +180,146 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
 				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Mapping_Copy_Activity_With_Settings')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "adfdemo/input/data.csv"
+							},
+							{
+								"name": "Target",
+								"value": "adfdemo/output/data.csv"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Info",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureDataLakeStorage1",
+										"type": "LinkedServiceReference"
+									},
+									"path": "adfdemo/errorlog/"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "emp_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "emp_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "salary",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "salary",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "emp_id",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "emp_id",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Input_CSV_DataSet_data_csv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Output_CSV_DataSet_data_csv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
+				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{
@@ -269,6 +460,200 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Set_Variable_Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "FileType",
+								"value": "@replace(pipeline().parameters.FileName,'Sales.csv','')"
+							}
+						],
+						"typeProperties": {
+							"variableName": "FileType",
+							"value": {
+								"value": "@replace(pipeline().parameters.FileName,'Sales.csv','')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(variables('FileType'),'Hourly')",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "Copy data2",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "DailySourceDataset",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DailyFileDataset",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "HourlySourceDataset",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "HourlyFileDataset",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"FileType": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DailySourceDataset')]",
+				"[concat(variables('factoryId'), '/datasets/DailyFileDataset')]",
+				"[concat(variables('factoryId'), '/datasets/HourlySourceDataset')]",
+				"[concat(variables('factoryId'), '/datasets/HourlyFileDataset')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Storage_Account_File_Movement')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -345,6 +730,122 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
 				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DailyFileDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "DailySales.csv",
+						"folderPath": "daily",
+						"fileSystem": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DailySourceDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "DailySales.csv",
+						"folderPath": "input",
+						"fileSystem": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HourlyFileDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "HourlySales.csv",
+						"folderPath": "hourly",
+						"fileSystem": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HourlySourceDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "HourlySales.csv",
+						"folderPath": "input",
+						"fileSystem": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{
@@ -565,6 +1066,39 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/EventBasedTrigger_SetVariable')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Set_Variable_Pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"FileName": "[parameters('EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/adfdemo/blobs/input/",
+					"blobPathEndsWith": "*.csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('EventBasedTrigger_SetVariable_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Set_Variable_Pipeline')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ParameterizedTrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -622,535 +1156,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Storage_Account_File_Movement')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Mapping_Copy_Activity_With_Settings')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "adfdemo/input/data.csv"
-							},
-							{
-								"name": "Target",
-								"value": "adfdemo/output/data.csv"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings",
-									"copyBehavior": "PreserveHierarchy"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"logSettings": {
-								"enableCopyActivityLog": true,
-								"copyActivityLogSettings": {
-									"logLevel": "Info",
-									"enableReliableLogging": false
-								},
-								"logLocationSettings": {
-									"linkedServiceName": {
-										"referenceName": "AzureDataLakeStorage1",
-										"type": "LinkedServiceReference"
-									},
-									"path": "adfdemo/errorlog/"
-								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "emp_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "emp_name",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "salary",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "salary",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "emp_id",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "emp_id",
-											"type": "String",
-											"physicalType": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Input_CSV_DataSet_data_csv",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Output_CSV_DataSet_data_csv",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
-				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Delete_Activity')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Delete1",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "Output_CSV_DataSet_data_csv",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureDataLakeStorage1",
-									"type": "LinkedServiceReference"
-								},
-								"path": "adfdemo/errorlog"
-							},
-							"enableLogging": true,
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"wildcardFileName": "*.csv",
-								"enablePartitionDiscovery": false
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Set_Variable_Pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "FileType",
-							"value": {
-								"value": "@replace(pipeline().parameters.FileName,'Sales','')",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "If Condition1",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Set variable1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(variables('FileType'),'Hourly')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "Copy data2",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "DailySourceDataset",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DailyFileDataset",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobFSReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "HourlySourceDataset",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "HourlyFileDataset",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"FileName": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"FileType": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/HourlySourceDataset')]",
-				"[concat(variables('factoryId'), '/datasets/HourlyFileDataset')]",
-				"[concat(variables('factoryId'), '/datasets/DailySourceDataset')]",
-				"[concat(variables('factoryId'), '/datasets/DailyFileDataset')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EventBasedTrigger_SetVariable')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Set_Variable_Pipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"FileName": "[parameters('EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/adfdemo/blobs/input/",
-					"blobPathEndsWith": "*.csv",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('EventBasedTrigger_SetVariable_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Set_Variable_Pipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HourlyFileDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "HourlySales.csv",
-						"folderPath": "hourly",
-						"fileSystem": "adfdemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DailyFileDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "DailySales.csv",
-						"folderPath": "daily",
-						"fileSystem": "adfdemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HourlySourceDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "HourlySales.csv",
-						"folderPath": "input",
-						"fileSystem": "adfdemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DailySourceDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "DailySales.csv",
-						"folderPath": "input",
-						"fileSystem": "adfdemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		}
 	]
