@@ -8,6 +8,7 @@
 				"dependsOn": [],
 				"userProperties": [
 					{
+						"name": "CountryFiles",
 						"value": "@pipeline().parameters.CountryFiles"
 					}
 				],
