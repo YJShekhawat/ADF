@@ -41,15 +41,13 @@
 							"name": "Append variable1",
 							"type": "AppendVariable",
 							"dependsOn": [],
-							"userProperties": [
-								{
-									"name": "Output",
-									"value": "@variables(\"ListOfArray\")"
-								}
-							],
+							"userProperties": [],
 							"typeProperties": {
 								"variableName": "ListOfArray",
-								"value": "@activity('Filter1').output"
+								"value": {
+									"value": "item()",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -74,7 +72,9 @@
 		"variables": {
 			"ListOfArray": {
 				"type": "Array",
-				"defaultValue": []
+				"defaultValue": [
+					1
+				]
 			}
 		},
 		"annotations": []
