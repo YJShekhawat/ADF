@@ -10,7 +10,12 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "FileType",
+						"value": "@replace(pipeline().parameters.FileName,'Sales.csv','')"
+					}
+				],
 				"typeProperties": {
 					"variableName": "FileType",
 					"value": {
