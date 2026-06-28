@@ -903,7 +903,7 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "DailyHourlySourceDataset",
+											"referenceName": "DailySourceDataset",
 											"type": "DatasetReference",
 											"parameters": {}
 										}
@@ -965,7 +965,7 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "DailyHourlySourceDataset",
+											"referenceName": "HourlySourceDataset",
 											"type": "DatasetReference",
 											"parameters": {}
 										}
@@ -998,8 +998,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DailyHourlySourceDataset')]",
+				"[concat(variables('factoryId'), '/datasets/HourlySourceDataset')]",
 				"[concat(variables('factoryId'), '/datasets/HourlyFileDataset')]",
+				"[concat(variables('factoryId'), '/datasets/DailySourceDataset')]",
 				"[concat(variables('factoryId'), '/datasets/DailyFileDataset')]"
 			]
 		},
@@ -1095,7 +1096,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DailyHourlySourceDataset')]",
+			"name": "[concat(parameters('factoryName'), '/HourlySourceDataset')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1108,7 +1109,36 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "HourlySales.csv,DailySales.csv",
+						"fileName": "HourlySales.csv",
+						"folderPath": "input",
+						"fileSystem": "adfdemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DailySourceDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "DailySales.csv",
 						"folderPath": "input",
 						"fileSystem": "adfdemo"
 					},
