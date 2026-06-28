@@ -84,7 +84,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DailyHourlySourceDataset",
+									"referenceName": "HourlySourceDataset",
 									"type": "DatasetReference"
 								}
 							],
@@ -144,7 +144,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DailyHourlySourceDataset",
+									"referenceName": "HourlySourceDataset",
 									"type": "DatasetReference"
 								}
 							],
