@@ -6,7 +6,11 @@
 				"name": "Append variable",
 				"type": "AppendVariable",
 				"dependsOn": [],
-				"userProperties": [],
+				"userProperties": [
+					{
+						"value": "@pipeline().parameters.CountryFiles"
+					}
+				],
 				"typeProperties": {
 					"variableName": "CountryFiles",
 					"value": "[\"SalesIndia\",\"SalesAfrica\"]"
