@@ -45,6 +45,44 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Append_Activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Append variable",
+						"type": "AppendVariable",
+						"dependsOn": [],
+						"userProperties": [
+							{
+								"name": "CountryFiles",
+								"value": "@string(variables('CountryFiles'))"
+							}
+						],
+						"typeProperties": {
+							"variableName": "CountryFiles",
+							"value": "[[\"SalesIndia\",\"SalesAfrica\"]"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"CountryFiles": {
+						"type": "Array",
+						"defaultValue": [
+							"SalesUk",
+							"SalesUs"
+						]
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Delete_Activity')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -181,6 +219,94 @@
 				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
 				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Filter_Activity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Filter1",
+						"type": "Filter",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.ListOfArray",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@greater(item(),3)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Filter1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Filter1').output",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Append variable1",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [
+										{
+											"name": "Output",
+											"value": "@variables(\"ListOfArray\")"
+										}
+									],
+									"typeProperties": {
+										"variableName": "ListOfArray",
+										"value": "@activity('Filter1').output"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"ListOfArray": {
+						"type": "array",
+						"defaultValue": [
+							1,
+							2,
+							3,
+							4,
+							5,
+							6,
+							7,
+							8
+						]
+					}
+				},
+				"variables": {
+					"ListOfArray": {
+						"type": "Array",
+						"defaultValue": []
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Mapping_Copy_Activity_With_Settings')]",
