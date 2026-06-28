@@ -35,7 +35,24 @@
 						"value": "@activity('Filter1').output",
 						"type": "Expression"
 					},
-					"isSequential": true
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [
+								{
+									"name": "Output",
+									"value": "@variables(\"ListOfArray\")"
+								}
+							],
+							"typeProperties": {
+								"variableName": "ListOfArray",
+								"value": "@activity('Filter1').output"
+							}
+						}
+					]
 				}
 			}
 		],
@@ -52,6 +69,12 @@
 					7,
 					8
 				]
+			}
+		},
+		"variables": {
+			"ListOfArray": {
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"annotations": []
