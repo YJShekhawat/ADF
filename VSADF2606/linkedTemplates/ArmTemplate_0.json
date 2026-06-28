@@ -526,7 +526,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Mapping_Copy_Activity')]",
+			"name": "[concat(parameters('factoryName'), '/Mapping_Copy_Activity_With_Settings')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -542,7 +542,16 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "adfdemo/input/data.csv"
+							},
+							{
+								"name": "Target",
+								"value": "adfdemo/output/data.csv"
+							}
+						],
 						"typeProperties": {
 							"source": {
 								"type": "DelimitedTextSource",
@@ -568,6 +577,20 @@
 								}
 							},
 							"enableStaging": false,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Info",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureDataLakeStorage1",
+										"type": "LinkedServiceReference"
+									},
+									"path": "adfdemo/errorlog/"
+								}
+							},
 							"translator": {
 								"type": "TabularTranslator",
 								"mappings": [
@@ -638,7 +661,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
-				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]"
+				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		},
 		{
