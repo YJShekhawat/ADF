@@ -1,0 +1,36 @@
+{
+	"name": "Set_Variable_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"FileType": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
