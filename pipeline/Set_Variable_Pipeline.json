@@ -19,7 +19,7 @@
 				"typeProperties": {
 					"variableName": "FileType",
 					"value": {
-						"value": "@replace(pipeline().parameters.FileName,'Sales','')",
+						"value": "@replace(pipeline().parameters.FileName,'Sales.csv','')",
 						"type": "Expression"
 					}
 				}
