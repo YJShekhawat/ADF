@@ -6,12 +6,7 @@
 				"name": "Append variable",
 				"type": "AppendVariable",
 				"dependsOn": [],
-				"userProperties": [
-					{
-						"name": "CountrySales",
-						"value": "@variables.CountrySales"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "CountryFiles",
 					"value": "[\"SalesIndia\",\"SalesAfrica\"]"
