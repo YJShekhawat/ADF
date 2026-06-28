@@ -45,7 +45,7 @@
 							"typeProperties": {
 								"variableName": "ListOfArray",
 								"value": {
-									"value": "item()",
+									"value": "@item()",
 									"type": "Expression"
 								}
 							}
