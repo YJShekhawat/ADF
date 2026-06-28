@@ -119,7 +119,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Input_CSV_DataSet_data_csv",
+									"referenceName": "DailyHourlySourceDataset",
 									"type": "DatasetReference"
 								}
 							],
