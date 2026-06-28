@@ -1,0 +1,32 @@
+{
+	"name": "Append_Activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Append variable",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [
+					{
+						"name": "CountrySales",
+						"value": "@variables.CountrySales"
+					}
+				],
+				"typeProperties": {
+					"variableName": "CountryFiles",
+					"value": "\"SalesIndia\",\"SalesAfrica\""
+				}
+			}
+		],
+		"variables": {
+			"CountryFiles": {
+				"type": "Array",
+				"defaultValue": [
+					"SalesUk",
+					"SalesUs"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
