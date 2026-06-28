@@ -9,7 +9,7 @@
 				"userProperties": [
 					{
 						"name": "CountryFiles",
-						"value": "@pipeline().parameters.CountryFiles"
+						"value": "@string(variables('CountryFiles'))"
 					}
 				],
 				"typeProperties": {
