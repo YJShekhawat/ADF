@@ -27,7 +27,7 @@
 			}
 		],
 		"parameters": {
-			"FileType": {
+			"FileName": {
 				"type": "string"
 			}
 		},
