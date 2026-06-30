@@ -1,0 +1,76 @@
+{
+	"name": "Employee_DataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeData"
+				},
+				{
+					"dataset": {
+						"referenceName": "DepartmentsDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "DepartmentsData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowSinkDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeeData",
+				"source(output(",
+				"          depid as string,",
+				"          depname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentsData",
+				"EmployeeData, DepartmentsData join(department == depid,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['EmpDepData.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          empid,",
+				"          name,",
+				"          country,",
+				"          depname",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink"
+			]
+		}
+	}
+}
