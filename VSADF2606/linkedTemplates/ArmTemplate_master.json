@@ -80,9 +80,6 @@
 					},
 					"SqlServer1_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
-					},
-					"Event Based Trigger_properties_typeProperties_scope": {
-						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -101,6 +98,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Event Based Trigger_properties_typeProperties_scope": {
+						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
 					},
 					"EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName": {
 						"value": "[parameters('EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName')]"
