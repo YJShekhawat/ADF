@@ -1,5 +1,5 @@
 {
-	"name": "Department3_Employees",
+	"name": "Filter_Department3_Employees_DataFlow",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
