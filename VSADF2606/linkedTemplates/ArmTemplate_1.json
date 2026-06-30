@@ -262,20 +262,12 @@
 										},
 										"ifFalseActivities": [
 											{
-												"name": "Set variable2",
-												"type": "SetVariable",
+												"name": "Wait1",
+												"type": "Wait",
 												"dependsOn": [],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
 												"userProperties": [],
 												"typeProperties": {
-													"variableName": "FileAvailable",
-													"value": {
-														"value": "@bool(false)",
-														"type": "Expression"
-													}
+													"waitTimeInSeconds": 10
 												}
 											}
 										],
