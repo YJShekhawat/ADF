@@ -25,61 +25,19 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/MetaData_Activity')]",
+			"name": "[concat(parameters('factoryName'), '/If_Condition_Activity')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "Input_CSV_DataSet_data_csv",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"lastModified"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
 						"name": "If Condition1",
 						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [
-							{
-								"name": "DateTime",
-								"value": "formatDateTime(activity('Get Metadata1').output.lastModified,'yyyy-MM-dd')"
-							}
-						],
+						"dependsOn": [],
+						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(\n    formatDateTime(utcNow(),'yyyy-MM-dd'),\n    formatDateTime(activity('Get Metadata1').output.lastModified,'yyyy-MM-dd')\n )",
+								"value": "@pipeline().parameters.If_Condition",
 								"type": "Expression"
 							},
 							"ifFalseActivities": [
@@ -137,9 +95,14 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "Output_CSV_DataSet_data_csv",
+											"referenceName": "ForEachLoopDataset",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"OutputFolder": {
+													"value": "@pipeline().parameters.OutputFolder",
+													"type": "Expression"
+												}
+											}
 										}
 									]
 								}
@@ -211,6 +174,16 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"If_Condition": {
+						"type": "bool",
+						"defaultValue": false
+					},
+					"OutputFolder": {
+						"type": "string",
+						"defaultValue": "output2"
+					}
 				},
 				"annotations": []
 			},
