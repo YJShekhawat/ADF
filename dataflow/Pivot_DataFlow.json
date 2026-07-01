@@ -40,7 +40,7 @@
 				"Employee3Data pivot(groupBy(department),",
 				"     pivotBy(gender),",
 				"     {} = count(id),",
-				"     columnNaming: '$N$V',",
+				"     columnNaming: 'Total_$N$V_Employees',",
 				"     lateral: true) ~> pivot1",
 				"pivot1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
