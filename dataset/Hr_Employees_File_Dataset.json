@@ -1,17 +1,9 @@
 {
-	"name": "Dynamic_Foder_File_Dataset",
+	"name": "Hr_Employees_File_Dataset",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"folderName": {
-				"type": "string"
-			},
-			"fileName": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -19,11 +11,11 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().fileName",
+					"value": "HR_Employees.csv",
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().folderName",
+					"value": "input",
 					"type": "Expression"
 				},
 				"fileSystem": "adfdemo"
