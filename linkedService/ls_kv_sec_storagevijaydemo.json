@@ -1,0 +1,10 @@
+{
+	"name": "ls_kv_sec_storagevijaydemo",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://adfdemovj.vault.azure.net/"
+		}
+	}
+}
