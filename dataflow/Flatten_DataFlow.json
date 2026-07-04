@@ -1,5 +1,5 @@
 {
-	"name": "Flatten_Dataset",
+	"name": "Flatten_DataFlow",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
