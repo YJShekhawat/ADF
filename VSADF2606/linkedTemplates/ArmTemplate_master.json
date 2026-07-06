@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "sec-adfdemovijay"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
@@ -27,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "@{linkedService().userName}"
 		},
+		"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://adfdemovj.vault.azure.net/"
+		},
 		"Event Based Trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
@@ -38,6 +46,10 @@
 		"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
+		},
+		"RestServicels_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pokeapi.co/api/v2/pokemon/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -80,6 +92,12 @@
 					},
 					"SqlServer1_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+					},
+					"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl')]"
+					},
+					"RestServicels_properties_typeProperties_url": {
+						"value": "[parameters('RestServicels_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -98,6 +116,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -152,6 +173,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_3')]"
 			]
 		}
 	]

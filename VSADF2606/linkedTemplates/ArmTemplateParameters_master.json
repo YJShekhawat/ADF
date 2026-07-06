@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"value": "sec-adfdemovijay"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storagevijaydemo.dfs.core.windows.net/"
 		},
@@ -20,6 +23,9 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "@{linkedService().userName}"
 		},
+		"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
+			"value": "https://adfdemovj.vault.azure.net/"
+		},
 		"Event Based Trigger_properties_typeProperties_scope": {
 			"value": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
@@ -28,6 +34,9 @@
 		},
 		"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
 			"value": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
+		},
+		"RestServicels_properties_typeProperties_url": {
+			"value": "https://pokeapi.co/api/v2/pokemon/"
 		},
 		"containerUri": {
 			"value": ""

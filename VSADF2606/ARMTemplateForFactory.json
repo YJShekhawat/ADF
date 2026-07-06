@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "sec-adfdemovijay"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
@@ -27,6 +31,10 @@
 			"type": "string",
 			"defaultValue": "@{linkedService().userName}"
 		},
+		"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://adfdemovj.vault.azure.net/"
+		},
 		"Event Based Trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
@@ -38,6 +46,10 @@
 		"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
+		},
+		"RestServicels_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pokeapi.co/api/v2/pokemon/"
 		}
 	},
 	"variables": {
@@ -1341,6 +1353,63 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Input_CSV_DataSet_data_csv')]",
 				"[concat(variables('factoryId'), '/datasets/Output_CSV_DataSet_data_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parameterized_DataFlow_Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Parameterized_DataFlow",
+								"type": "DataFlowReference",
+								"parameters": {
+									"department": {
+										"value": "@pipeline().parameters.department",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"department": {
+						"type": "int",
+						"defaultValue": 1
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Parameterized_DataFlow')]"
 			]
 		},
 		{
@@ -3578,6 +3647,28 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_kv_sec_storagevijaydemo",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_kv_sec_storagevijaydemo')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -3623,6 +3714,19 @@
 					"authenticationType": "SQL",
 					"userName": "[parameters('SqlServer1_properties_typeProperties_userName')]",
 					"password": "@{linkedService().password}"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_kv_sec_storagevijaydemo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []
@@ -4480,6 +4584,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Parameterized_DataFlow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Employees2_Dataset",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DataFlowSinkDataSet",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"parameters{",
+						"     department as integer (1)",
+						"}",
+						"source(output(",
+						"          empid as string,",
+						"          name as string,",
+						"          country as string,",
+						"          department as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 filter(department==$department) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['Parameterized_DataFlow_Output.csv'],",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Employees2_Dataset')]",
+				"[concat(variables('factoryId'), '/datasets/DataFlowSinkDataSet')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Pivot_DataFlow')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -4947,75 +5112,14 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Parameterized_DataFlow')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Employees2_Dataset",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DataFlowSinkDataSet",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "filter1"
-						}
-					],
-					"scriptLines": [
-						"parameters{",
-						"     department as integer (1)",
-						"}",
-						"source(output(",
-						"          empid as string,",
-						"          name as string,",
-						"          country as string,",
-						"          department as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 filter(department==$department) ~> filter1",
-						"filter1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     partitionFileNames:['Parameterized_DataFlow_Output.csv'],",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     partitionBy('hash', 1)) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Employees2_Dataset')]",
-				"[concat(variables('factoryId'), '/datasets/DataFlowSinkDataSet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Parameterized_DataFlow_Pipeline')]",
+			"name": "[concat(parameters('factoryName'), '/Pagination_Implementation_Pipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
+						"name": "Copy data1",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -5026,43 +5130,86 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Parameterized_DataFlow",
-								"type": "DataFlowReference",
-								"parameters": {
-									"department": {
-										"value": "@pipeline().parameters.department",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"AbsoluteUrl": "$.next"
+								}
 							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
 							},
-							"traceLevel": "Fine"
-						}
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "RestResourceDataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DataFlowSinkDataSet",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"department": {
-						"type": "int",
-						"defaultValue": 1
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Parameterized_DataFlow')]"
+				"[concat(variables('factoryId'), '/datasets/RestResourceDataset')]",
+				"[concat(variables('factoryId'), '/datasets/DataFlowSinkDataSet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestServicels')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestServicels_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestResourceDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestServicels",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RestServicels')]"
 			]
 		}
 	]
