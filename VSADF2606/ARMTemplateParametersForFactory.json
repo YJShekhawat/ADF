@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"SelfHostedSqlServer_password": {
+			"value": ""
+		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
 			"value": "sec-adfdemovijay"
 		},
@@ -40,6 +43,15 @@
 		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"value": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_server": {
+			"value": "NITRO5"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_database": {
+			"value": "VSS"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_userName": {
+			"value": "sa"
 		}
 	}
 }

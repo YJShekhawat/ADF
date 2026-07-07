@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"SelfHostedSqlServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SelfHostedSqlServer'"
+		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "sec-adfdemovijay"
@@ -54,6 +58,18 @@
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "NITRO5"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "VSS"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
 		},
 		"containerUri": {
 			"type": "string",
@@ -124,8 +140,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SelfHostedSqlServer_password": {
+						"value": "[parameters('SelfHostedSqlServer_password')]"
+					},
 					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_server": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_server')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_database": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_database')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_userName": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_userName')]"
 					}
 				}
 			},
