@@ -1,0 +1,12 @@
+{
+	"name": "RestResourceDynamicOffsetDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestServiceDynamicOffsetls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}

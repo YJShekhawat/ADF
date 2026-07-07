@@ -1,5 +1,5 @@
 {
-	"name": "Pagination_Implementation_Pipeline",
+	"name": "Pagination_Dynamic_Offset_Implementation_Pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -21,7 +21,7 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"paginationRules": {
-							"AbsoluteUrl": "$.next"
+							"QueryParameters.{offset}": "RANGE:0:1351:20"
 						}
 					},
 					"sink": {
@@ -62,7 +62,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "RestResourceDataset",
+						"referenceName": "RestResourceDynamicOffsetDataset",
 						"type": "DatasetReference"
 					}
 				],
