@@ -1,0 +1,26 @@
+{
+	"name": "SqlServerTableCountriesDw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SelfHostedSqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Countries",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CountriesDw"
+		}
+	}
+}
