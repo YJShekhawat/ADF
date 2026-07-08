@@ -121,12 +121,6 @@
 									"value": false
 								},
 								{
-									"name": "keys",
-									"value": [
-										"Countries"
-									]
-								},
-								{
 									"name": "deletable",
 									"value": true
 								},
@@ -141,6 +135,12 @@
 								{
 									"name": "defaultToUpsert",
 									"value": true
+								},
+								{
+									"name": "keys",
+									"value": [
+										"Id"
+									]
 								}
 							]
 						}
@@ -258,6 +258,7 @@
 			},
 			"mode": "Microbatch"
 		},
+		"status": "Started",
 		"allowVNetOverride": false
 	}
 }
