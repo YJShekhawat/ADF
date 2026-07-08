@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SelfHostedSqlServer'"
 		},
+		"AzureSqlDatabasels_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabasels'"
+		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "sec-adfdemovijay"
@@ -23,9 +27,25 @@
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
 		},
+		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
+		},
 		"RestServicels_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pokeapi.co/api/v2/pokemon/"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "NITRO5"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "VSS"
+		},
+		"SelfHostedSqlServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
 		},
 		"SqlServer1_properties_typeProperties_server": {
 			"type": "string",
@@ -55,21 +75,17 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
-		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
+		"AzureSqlDatabasels_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
+			"defaultValue": "azure-vss-server.database.windows.net"
 		},
-		"SelfHostedSqlServer_properties_typeProperties_server": {
+		"AzureSqlDatabasels_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "NITRO5"
+			"defaultValue": "Azure_VSS"
 		},
-		"SelfHostedSqlServer_properties_typeProperties_database": {
+		"AzureSqlDatabasels_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "VSS"
-		},
-		"SelfHostedSqlServer_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sa"
+			"defaultValue": "db_vss"
 		},
 		"containerUri": {
 			"type": "string",
@@ -101,8 +117,14 @@
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					},
+					"AzureSqlDatabasels_password": {
+						"value": "[parameters('AzureSqlDatabasels_password')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"RestServiceDynamicOffsetls_properties_typeProperties_url": {
+						"value": "[parameters('RestServiceDynamicOffsetls_properties_typeProperties_url')]"
 					},
 					"RestServicels_properties_typeProperties_url": {
 						"value": "[parameters('RestServicels_properties_typeProperties_url')]"
@@ -119,8 +141,14 @@
 					"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl')]"
 					},
-					"RestServiceDynamicOffsetls_properties_typeProperties_url": {
-						"value": "[parameters('RestServiceDynamicOffsetls_properties_typeProperties_url')]"
+					"AzureSqlDatabasels_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabasels_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabasels_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_userName')]"
 					}
 				}
 			},
