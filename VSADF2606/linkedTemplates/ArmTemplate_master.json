@@ -11,13 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
-		"SelfHostedSqlServer_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SelfHostedSqlServer'"
-		},
 		"AzureSqlDatabasels_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabasels'"
+		},
+		"SelfHostedSqlServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SelfHostedSqlServer'"
 		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
@@ -26,6 +26,18 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storagevijaydemo.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azure-vss-server.database.windows.net"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "Azure_VSS"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "db_vss"
 		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"type": "string",
@@ -75,17 +87,13 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
-		"AzureSqlDatabasels_properties_typeProperties_server": {
+		"AzureDataLakeStorage242_properties_privateLinkResourceId": {
 			"type": "string",
-			"defaultValue": "azure-vss-server.database.windows.net"
+			"defaultValue": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
-		"AzureSqlDatabasels_properties_typeProperties_database": {
+		"AzureDataLakeStorage242_properties_groupId": {
 			"type": "string",
-			"defaultValue": "Azure_VSS"
-		},
-		"AzureSqlDatabasels_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "db_vss"
+			"defaultValue": "dfs"
 		},
 		"containerUri": {
 			"type": "string",
@@ -123,6 +131,15 @@
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
+					"AzureSqlDatabasels_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabasels_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabasels_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_userName')]"
+					},
 					"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 						"value": "[parameters('RestServiceDynamicOffsetls_properties_typeProperties_url')]"
 					},
@@ -140,15 +157,6 @@
 					},
 					"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl')]"
-					},
-					"AzureSqlDatabasels_properties_typeProperties_server": {
-						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_server')]"
-					},
-					"AzureSqlDatabasels_properties_typeProperties_database": {
-						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_database')]"
-					},
-					"AzureSqlDatabasels_properties_typeProperties_userName": {
-						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -202,6 +210,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"
+					},
+					"AzureDataLakeStorage242_properties_groupId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_groupId')]"
 					}
 				}
 			},
@@ -256,6 +270,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_4')]"
 			]
 		}
 	]

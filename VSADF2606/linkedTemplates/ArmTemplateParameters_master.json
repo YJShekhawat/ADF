@@ -8,10 +8,10 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
-		"SelfHostedSqlServer_password": {
+		"AzureSqlDatabasels_password": {
 			"value": ""
 		},
-		"AzureSqlDatabasels_password": {
+		"SelfHostedSqlServer_password": {
 			"value": ""
 		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
@@ -19,6 +19,15 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://storagevijaydemo.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_server": {
+			"value": "azure-vss-server.database.windows.net"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_database": {
+			"value": "Azure_VSS"
+		},
+		"AzureSqlDatabasels_properties_typeProperties_userName": {
+			"value": "db_vss"
 		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"value": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
@@ -56,14 +65,11 @@
 		"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
 			"value": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
-		"AzureSqlDatabasels_properties_typeProperties_server": {
-			"value": "azure-vss-server.database.windows.net"
+		"AzureDataLakeStorage242_properties_privateLinkResourceId": {
+			"value": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo"
 		},
-		"AzureSqlDatabasels_properties_typeProperties_database": {
-			"value": "Azure_VSS"
-		},
-		"AzureSqlDatabasels_properties_typeProperties_userName": {
-			"value": "db_vss"
+		"AzureDataLakeStorage242_properties_groupId": {
+			"value": "dfs"
 		},
 		"containerUri": {
 			"value": ""
