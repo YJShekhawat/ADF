@@ -15,14 +15,14 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DataFlowSinkDataSet",
+						"referenceName": "Cast_Dataset",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
 				},
 				{
 					"dataset": {
-						"referenceName": "DataFlowSinkDataSet",
+						"referenceName": "Cast_Dataset",
 						"type": "DatasetReference"
 					},
 					"name": "sink2"
@@ -37,10 +37,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     good_file_name as string (\"good_cast_data.txt\"),",
-				"     bad_file_name as string (\"bad_cast_data.txt\")",
-				"}",
 				"source(output(",
 				"          empid as short,",
 				"          name as string,",
@@ -63,6 +59,13 @@
 				"     disjoint: false) ~> split1@(goodRecords, badRecords)",
 				"split1@goodRecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string,",
+				"          NewCountryColumn as string",
+				"     ),",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
@@ -70,6 +73,13 @@
 				"     skipDuplicateMapOutputs: true) ~> sink1",
 				"split1@badRecords sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string,",
+				"          NewCountryColumn as string",
+				"     ),",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
