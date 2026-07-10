@@ -21,37 +21,18 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "window1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
-				"source(output(",
-				"          id as string,",
-				"          name as string,",
-				"          gender as string,",
-				"          country as string,",
-				"          salary as integer,",
-				"          department as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 window(over(department),",
-				"     asc(salary, true),",
-				"     Rank = rank(),",
-				"          DenseRank = denseRank(),",
-				"          Sum = sum(salary)) ~> window1",
-				"window1 sink(allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> ",
+				" sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['Window_Function_DataFlow_Output.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

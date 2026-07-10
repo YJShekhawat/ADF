@@ -35,56 +35,28 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "aggregate1"
-				},
-				{
-					"name": "join1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
-				"source(output(",
-				"          empid as string,",
-				"          name as string,",
-				"          country as string,",
-				"          department as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> EmployeeData",
-				"source(output(",
-				"          depid as string,",
-				"          depname as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> ",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> DepartmentData",
-				"EmployeeData aggregate(groupBy(department),",
-				"     Total_Employees = count(empid)) ~> aggregate1",
-				"EmployeeData, DepartmentData join(department == depid,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"     ignoreNoFilesFound: false) ~> ",
+				" sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['New_Branch_Aggregated_Data.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> OutputSink",
-				"join1 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> OutputSink",
+				" sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['New_Branch_Join_Data.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
