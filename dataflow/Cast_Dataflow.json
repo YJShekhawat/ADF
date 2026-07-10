@@ -1,0 +1,81 @@
+{
+	"name": "Cast_Dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowSinkDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DataFlowSinkDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     good_file_name as string (\"good_cast_data.txt\"),",
+				"     bad_file_name as string (\"bad_cast_data.txt\")",
+				"}",
+				"source(output(",
+				"          empid as short,",
+				"          name as string,",
+				"          country as string,",
+				"          doj as string,",
+				"          department as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 cast(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          doj as date 'dd/MM/yyyy',",
+				"          department as string",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 split(!isError(),",
+				"     disjoint: false) ~> split1@(goodRecords, badRecords)",
+				"split1@goodRecords sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"split1@badRecords sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}
