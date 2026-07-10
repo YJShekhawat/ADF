@@ -1,0 +1,7 @@
+{
+	"name": "AzureDataLakeStorage921",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/5e8b1b54-b36b-40df-8776-56bfad5e0633/resourceGroups/vijay_rg/providers/Microsoft.Storage/storageAccounts/storagevijaydemo",
+		"groupId": "dfs"
+	}
+}
