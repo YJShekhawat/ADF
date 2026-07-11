@@ -1,0 +1,45 @@
+{
+	"name": "Cache_Sink_Output_Activity_Dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DynamicFileDataset",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as short,",
+				"          emp_name as string,",
+				"          salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 aggregate(maxSalary = max(salary)) ~> aggregate1",
+				"aggregate1 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> sink1"
+			]
+		}
+	}
+}
