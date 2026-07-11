@@ -73,6 +73,16 @@
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          id = EmployeeDataSource@id,",
+				"          name = EmployeeDataSource@name,",
+				"          gender,",
+				"          country,",
+				"          department,",
+				"          doj,",
+				"          id = DepartmentDataSource@id,",
+				"          name = DepartmentDataSource@name",
+				"     ),",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
