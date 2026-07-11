@@ -5,7 +5,7 @@
 			"PipelineBillingEnabled": "true"
 		},
 		"trustModeClaimForMi": {
-			"value": "Enabled",
+			"value": "Disabled",
 			"editable": true
 		}
 	},
