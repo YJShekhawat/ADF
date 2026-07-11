@@ -1,6 +1,12 @@
 {
 	"name": "VSADF2606",
 	"properties": {
+		"globalParameters": {
+			"GlobalSourceLocation": {
+				"type": "string",
+				"value": "adfdemo/input/"
+			}
+		},
 		"globalConfigurations": {
 			"PipelineBillingEnabled": "true"
 		},
