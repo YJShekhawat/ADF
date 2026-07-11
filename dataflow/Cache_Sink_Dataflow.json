@@ -35,7 +35,7 @@
 						"referenceName": "AzureSqlTableDataset",
 						"type": "DatasetReference"
 					},
-					"name": "sink2"
+					"name": "EmployeeSink"
 				},
 				{
 					"name": "countrycache"
@@ -102,7 +102,7 @@
 				"          empId = NewEmpKey,",
 				"          name,",
 				"          country = NewCountry",
-				"     )) ~> sink2",
+				"     )) ~> EmployeeSink",
 				"CountryCodeSoure sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
