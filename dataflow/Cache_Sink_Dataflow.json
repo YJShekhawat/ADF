@@ -9,21 +9,21 @@
 						"referenceName": "AzureSqlTableDataset",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "EmployeeSource"
 				},
 				{
 					"dataset": {
 						"referenceName": "DynamicFileDataset",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "FileSource"
 				},
 				{
 					"dataset": {
 						"referenceName": "AzureSqlTableDataset",
 						"type": "DatasetReference"
 					},
-					"name": "source3"
+					"name": "CountryCodeSoure"
 				}
 			],
 			"sinks": [
@@ -57,7 +57,7 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'SELECT max(empid) as MaxEmpId FROM Employees',",
-				"     format: 'query') ~> source1",
+				"     format: 'query') ~> EmployeeSource",
 				"source(output(",
 				"          empId as short,",
 				"          name as string,",
@@ -66,7 +66,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     partitionBy('hash', 1)) ~> source2",
+				"     partitionBy('hash', 1)) ~> FileSource",
 				"source(output(",
 				"          code as string,",
 				"          country as string",
@@ -75,15 +75,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'select * from countrycodes',",
-				"     format: 'query') ~> source3",
-				"source2 keyGenerate(output(EmpSurrogateKey as long),",
+				"     format: 'query') ~> CountryCodeSoure",
+				"FileSource keyGenerate(output(EmpSurrogateKey as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L,",
 				"     partitionBy('hash', 1)) ~> SurrogateKey",
 				"SurrogateKey derive(NewEmpKey = sink1#outputs()[1].MaxEmpId + EmpSurrogateKey ,",
 				"          NewCountry = countrycache#lookup(country).countryname,",
 				"     partitionBy('hash', 1)) ~> derivedColumn1",
-				"source1 sink(validateSchema: false,",
+				"EmployeeSource sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
@@ -103,7 +103,7 @@
 				"          name,",
 				"          country = NewCountry",
 				"     )) ~> sink2",
-				"source3 sink(validateSchema: false,",
+				"CountryCodeSoure sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     keys:['countrycode'],",
