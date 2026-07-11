@@ -8,13 +8,13 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"value": ""
+		},
 		"AzureSqlDatabasels_password": {
 			"value": ""
 		},
 		"SelfHostedSqlServer_password": {
-			"value": ""
-		},
-		"AzureDatabricksDeltaLake1_accessToken": {
 			"value": ""
 		},
 		"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
@@ -56,6 +56,9 @@
 		"SqlServer1_properties_typeProperties_userName": {
 			"value": "@{linkedService().userName}"
 		},
+		"WebTable_properties_typeProperties_url": {
+			"value": "https://www.careerpower.in/states-and-capitals-of-india.html"
+		},
 		"ls_kv_sec_storagevijaydemo_properties_typeProperties_baseUrl": {
 			"value": "https://adfdemovj.vault.azure.net/"
 		},
@@ -73,9 +76,6 @@
 		},
 		"AzureDataLakeStorage242_properties_groupId": {
 			"value": "dfs"
-		},
-		"WebTable_properties_typeProperties_url": {
-			"value": "https://www.careerpower.in/states-and-capitals-of-india.html"
 		}
 	}
 }
