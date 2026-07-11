@@ -1,0 +1,32 @@
+{
+	"name": "Stringify_Dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DynamicJsonFileDataset",
+						"type": "DatasetReference"
+					},
+					"name": "JsonSourceDataset"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          name as string,",
+				"          skills as string[],",
+				"          Address as (state as string, country as string, zipcode as string),",
+				"          Contact as (Phone as string, email as string)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> JsonSourceDataset"
+			]
+		}
+	}
+}
