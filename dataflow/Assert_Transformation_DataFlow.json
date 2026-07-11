@@ -1,0 +1,54 @@
+{
+	"name": "Assert_Transformation_DataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DynamicFileDataset",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeDataSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DynamicFileDataset",
+						"type": "DatasetReference"
+					},
+					"name": "DepartmentDataSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "assert1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as short,",
+				"          name as string,",
+				"          gender as string,",
+				"          country as string,",
+				"          department as short,",
+				"          doj as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     partitionBy('hash', 1)) ~> EmployeeDataSource",
+				"source(output(",
+				"          id as short,",
+				"          name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentDataSource",
+				"EmployeeDataSource, DepartmentDataSource assert(expectTrue(!isNull(toDate(doj,'ddMMyyyy')), false, 'assertDojCheck'),",
+				"     expectUnique(EmployeeDataSource@id, false, 'assertUniqueCheck'),",
+				"     expectExists(department == ERROR_FUNCTION(''), false, 'assertDepExistsCheck')) ~> assert1"
+			]
+		}
+	}
+}
