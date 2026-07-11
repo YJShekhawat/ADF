@@ -12,20 +12,51 @@
 					"name": "JsonSourceDataset"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowSinkDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "stringify1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          id as string,",
+				"          Contact as (Phone as string, email as string),",
+				"          id as short,",
 				"          name as string,",
-				"          skills as string[],",
-				"          Address as (state as string, country as string, zipcode as string),",
-				"          Contact as (Phone as string, email as string)",
+				"          skills as string[]",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> JsonSourceDataset"
+				"     documentForm: 'arrayOfDocuments',",
+				"     partitionBy('hash', 1)) ~> JsonSourceDataset",
+				"JsonSourceDataset stringify(ContactStringify = Contact ? string,",
+				"     format: 'json') ~> stringify1",
+				"stringify1 derive(ContactString = toString(ContactStringify)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Stringify_Dataflow_Output.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          name,",
+				"          Contact = ContactString",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
