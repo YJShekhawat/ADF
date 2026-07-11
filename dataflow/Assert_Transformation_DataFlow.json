@@ -19,10 +19,24 @@
 					"name": "DepartmentDataSource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowSinkDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "assert1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -46,8 +60,20 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DepartmentDataSource",
 				"EmployeeDataSource, DepartmentDataSource assert(expectTrue(!isNull(toDate(doj,'ddMMyyyy')), false, 'assertDojCheck'),",
-				"     expectUnique(EmployeeDataSource@id, false, 'assertUniqueCheck'),",
-				"     expectExists(department == ERROR_FUNCTION(''), false, 'assertDepExistsCheck')) ~> assert1"
+				"     expectUnique(EmployeeDataSource@id, true, 'assertUniqueCheck'),",
+				"     expectExists(DepartmentDataSource@id == department, false, 'assertDepExistsCheck')) ~> assert1",
+				"assert1 derive(iSErrorRow = isError(),",
+				"          isCorrectDepRow = hasError('assertDepExistsCheck')) ~> derivedColumn1",
+				"derivedColumn1 filter(iSErrorRow==false()) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['Assert_Dataflow_Transformations_Output.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
