@@ -1,0 +1,79 @@
+{
+	"name": "Scenario1_Error_Row_Logging_Dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DynamicFileDataset",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableDataset",
+						"type": "DatasetReference"
+					},
+					"name": "ErrorSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableDataset",
+						"type": "DatasetReference"
+					},
+					"name": "GoodSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "AddingFileName"
+				},
+				{
+					"name": "AddingFileName1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          saleDate as string,",
+				"          salesItem as string,",
+				"          country as string,",
+				"          quantity as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 split(isNull(toDate(saleDate,\"dd-MMM-yyyy\")),",
+				"     disjoint: false) ~> split1@(ErrorRows, GoodRows)",
+				"split1@ErrorRows derive(fileName = \"Scenario1_Row_Logging_Source.csv\") ~> AddingFileName",
+				"split1@GoodRows derive(fileName = \"Scenario1_Row_Logging_Source.csv\") ~> AddingFileName1",
+				"AddingFileName sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ErrorSink",
+				"AddingFileName1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> GoodSink"
+			]
+		}
+	}
+}
