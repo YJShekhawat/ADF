@@ -1,14 +1,11 @@
 {
-	"name": "DynamicFolderDataset",
+	"name": "Scenario2SourceDataSet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"folderName": {
-				"type": "string"
-			},
 			"fileName": {
 				"type": "string"
 			}
@@ -22,10 +19,7 @@
 					"value": "@dataset().fileName",
 					"type": "Expression"
 				},
-				"folderPath": {
-					"value": "@dataset().folderName",
-					"type": "Expression"
-				},
+				"folderPath": "input/scenario2_input_files",
 				"fileSystem": "adfdemo"
 			},
 			"columnDelimiter": ",",
