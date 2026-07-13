@@ -16,11 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DynamicFolderDataset",
-						"type": "DatasetReference",
-						"parameters": {
-							"folderName": "input/scenario2_input_files"
-						}
+						"referenceName": "Scenario2MetaDataDataset",
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -70,8 +67,6 @@
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
 										"recursive": true,
-										"wildcardFolderPath": "input/scenario2_input_files/",
-										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
@@ -101,11 +96,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DynamicFolderDataset",
+									"referenceName": "Scenario2SourceDataSet",
 									"type": "DatasetReference",
 									"parameters": {
-										"folderName": {
-											"value": "\"input/scenario2_input_files/\" +item().fileName",
+										"fileName": {
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
@@ -113,11 +108,11 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DynamicFolderDataset",
+									"referenceName": "Scenario2TargetDataSet",
 									"type": "DatasetReference",
 									"parameters": {
-										"folderName": {
-											"value": "\"output/scenario2_output_files/\"+item().fileName",
+										"fileName": {
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
