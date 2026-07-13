@@ -117,7 +117,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"folderName": {
-											"value": "\"input/scenario2_output_files/\"+item().fileName",
+											"value": "\"output/scenario2_output_files/\"+item().fileName",
 											"type": "Expression"
 										}
 									}
