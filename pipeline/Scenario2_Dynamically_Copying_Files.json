@@ -70,6 +70,7 @@
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
 										"recursive": true,
+										"wildcardFolderPath": "input/scenario2_input_files/",
 										"wildcardFileName": "*",
 										"enablePartitionDiscovery": false
 									},
@@ -116,7 +117,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"folderName": {
-											"value": "@\"input/scenario2_output_files/\"+item().fileName",
+											"value": "\"input/scenario2_output_files/\"+item().fileName",
 											"type": "Expression"
 										}
 									}
