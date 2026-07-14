@@ -1,5 +1,5 @@
 {
-	"name": "Scenario10_Log_Pipeline_Executions_Dataflow",
+	"name": "Scenario10_B_Log_Pipeline_Executions_Dataflow",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
