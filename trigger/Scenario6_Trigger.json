@@ -1,0 +1,24 @@
+{
+	"name": "Scenario6_Trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Scenario6_Log_Pipeline_Executions_Pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2026-07-13T21:39:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
