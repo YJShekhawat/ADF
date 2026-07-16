@@ -1,1 +1,10 @@
-{}
+{
+	"GlobalSourceLocation": {
+		"type": "string",
+		"value": "adfdemo/input"
+	},
+	"GlobalDestinationLocation": {
+		"type": "string",
+		"value": "adfdemo/output"
+	}
+}

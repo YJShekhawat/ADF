@@ -224,12 +224,6 @@
 					},
 					"WebTable_properties_typeProperties_url": {
 						"value": "[parameters('WebTable_properties_typeProperties_url')]"
-					},
-					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
-						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"
-					},
-					"AzureDataLakeStorage242_properties_groupId": {
-						"value": "[parameters('AzureDataLakeStorage242_properties_groupId')]"
 					}
 				}
 			},
@@ -250,6 +244,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"
+					},
+					"AzureDataLakeStorage242_properties_groupId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_groupId')]"
 					}
 				}
 			},
@@ -310,6 +310,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"Event Based Trigger_properties_typeProperties_scope": {
 						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
@@ -323,7 +343,27 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_5')]"
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_6')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_8",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_8.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_7')]"
 			]
 		}
 	]
