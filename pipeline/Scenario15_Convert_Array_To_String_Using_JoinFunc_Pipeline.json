@@ -70,6 +70,30 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "EmailsString",
+					"value": {
+						"value": "@join(variables('EmailsArray'), ';')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
