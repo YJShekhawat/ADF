@@ -1,0 +1,46 @@
+{
+	"name": "Scenario17_SCD_Type2_Dataflow_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Scenario17_SCD_Type2_Dataflow",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"FileName": "Scenario17_SCDType2Source.csv"
+							},
+							"source2": {
+								"TableName": "tbl_employee_Scd_Type2"
+							},
+							"sink1": {
+								"TableName": "tbl_employee_Scd_Type2"
+							},
+							"UpdateIsActive0": {
+								"TableName": "tbl_employee_Scd_Type2"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
