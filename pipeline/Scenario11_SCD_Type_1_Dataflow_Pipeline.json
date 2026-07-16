@@ -1,0 +1,40 @@
+{
+	"name": "Scenario11_SCD_Type_1_Dataflow_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Scenario11_SCD_Type_1_Dataflow",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"FileName": "Scenario11_ScdType1Source.csv"
+							},
+							"sink1": {
+								"TableName": "tbl_employee"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
