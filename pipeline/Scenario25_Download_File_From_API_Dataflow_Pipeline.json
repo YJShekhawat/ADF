@@ -44,7 +44,7 @@
 						"referenceName": "Scenario25Dataset",
 						"type": "DatasetReference",
 						"parameters": {
-							"fileName": "Scenario25_Output.csv"
+							"fileName": "airline.xls"
 						}
 					}
 				]
