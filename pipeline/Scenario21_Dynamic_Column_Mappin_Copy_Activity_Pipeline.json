@@ -78,6 +78,69 @@
 								},
 								"firstRowOnly": false
 							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Lookup1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"wildcardFolderPath": "input/Scenario21",
+										"wildcardFileName": {
+											"value": "@activity('Lookup1').output.value['sourceFile']",
+											"type": "Expression"
+										},
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@activity('Lookup1').output.value['jsonMapping']",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Scenario21_Metadata_Dataset",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTableDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@activity('Lookup1').output.value['sinkTableName']",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
