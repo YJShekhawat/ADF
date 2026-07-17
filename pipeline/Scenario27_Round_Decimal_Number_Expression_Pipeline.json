@@ -1,0 +1,30 @@
+{
+	"name": "Scenario27_Round_Decimal_Number_Expression_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "roundNumber",
+					"value": {
+						"value": "@string(div(float(split(string(mul(123.34231,100)),'.')[0]),100))\n",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"roundNumber": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
