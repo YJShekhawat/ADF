@@ -1,0 +1,16 @@
+{
+	"name": "API_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServerLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		}
+	}
+}

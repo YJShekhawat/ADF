@@ -1,0 +1,103 @@
+{
+	"name": "Scenario23_Send_Email_Alert_When_Pipeline_Fails_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DynamicFileDataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "xxxxxxxxxxxxxxx.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DynamicFileOutputDataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": "xxxxxxxxxxxxxxx.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-34.eastus.logic.azure.com:443/workflows/72a07b4c4ac34376b08e771f2c9c893c/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=bTYDUDiTojhnmEOMKU1p09dvLSgcBQ3QfjolyuWVpTQ",
+					"body": {
+						"value": "{\n    \"Pipeline\": \"@{pipeline().Pipeline}\",\n    \"ErrorMessage\": \"@{activity('Copy data1').Error.Message}\",\n    \"DataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"Runid\": \"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

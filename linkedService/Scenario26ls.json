@@ -1,0 +1,12 @@
+{
+	"name": "Scenario26ls",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://raw.githubusercontent.com/readmeio/import-samples/master/import-sample-multiple-versions.zip",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
