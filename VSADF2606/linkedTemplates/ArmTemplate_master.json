@@ -43,6 +43,10 @@
 			"type": "string",
 			"defaultValue": "db_vss"
 		},
+		"HttpServerLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/bharathirajatut/sample-excel-dataset/master/airline.xls"
+		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
@@ -50,6 +54,10 @@
 		"RestServicels_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pokeapi.co/api/v2/pokemon/"
+		},
+		"Scenario26ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/readmeio/import-samples/master/import-sample-multiple-versions.zip"
 		},
 		"SelfHostedSqlServer_properties_typeProperties_server": {
 			"type": "string",
@@ -151,11 +159,17 @@
 					"AzureSqlDatabasels_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabasels_properties_typeProperties_userName')]"
 					},
+					"HttpServerLS_properties_typeProperties_url": {
+						"value": "[parameters('HttpServerLS_properties_typeProperties_url')]"
+					},
 					"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 						"value": "[parameters('RestServiceDynamicOffsetls_properties_typeProperties_url')]"
 					},
 					"RestServicels_properties_typeProperties_url": {
 						"value": "[parameters('RestServicels_properties_typeProperties_url')]"
+					},
+					"Scenario26ls_properties_typeProperties_url": {
+						"value": "[parameters('Scenario26ls_properties_typeProperties_url')]"
 					},
 					"SqlServer1_properties_typeProperties_server": {
 						"value": "[parameters('SqlServer1_properties_typeProperties_server')]"
@@ -206,9 +220,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -232,6 +243,9 @@
 					},
 					"SelfHostedSqlServer_password": {
 						"value": "[parameters('SelfHostedSqlServer_password')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
 					},
 					"SelfHostedSqlServer_properties_typeProperties_server": {
 						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_server')]"
@@ -350,6 +364,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_7')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_9",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_9.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"Event Based Trigger_properties_typeProperties_scope": {
 						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
@@ -363,7 +397,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_7')]"
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_8')]"
 			]
 		}
 	]

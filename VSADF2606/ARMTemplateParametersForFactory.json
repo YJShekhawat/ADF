@@ -32,11 +32,17 @@
 		"AzureSqlDatabasels_properties_typeProperties_userName": {
 			"value": "db_vss"
 		},
+		"HttpServerLS_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/bharathirajatut/sample-excel-dataset/master/airline.xls"
+		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"value": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
 		},
 		"RestServicels_properties_typeProperties_url": {
 			"value": "https://pokeapi.co/api/v2/pokemon/"
+		},
+		"Scenario26ls_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/readmeio/import-samples/master/import-sample-multiple-versions.zip"
 		},
 		"SelfHostedSqlServer_properties_typeProperties_server": {
 			"value": "NITRO5"
