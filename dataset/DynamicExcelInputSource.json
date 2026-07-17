@@ -22,7 +22,8 @@
 				},
 				"folderPath": "input",
 				"fileSystem": "adfdemo"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": []
 	}
