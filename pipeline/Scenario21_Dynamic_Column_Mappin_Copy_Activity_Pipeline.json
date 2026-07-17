@@ -106,7 +106,7 @@
 										"recursive": true,
 										"wildcardFolderPath": "input/Scenario21",
 										"wildcardFileName": {
-											"value": "@activity('Lookup1').output.value['sourceFile']",
+											"value": "@activity('Lookup1').output.value[0].sourceFile",
 											"type": "Expression"
 										},
 										"enablePartitionDiscovery": false
@@ -119,7 +119,7 @@
 								},
 								"enableStaging": false,
 								"translator": {
-									"value": "@activity('Lookup1').output.value['jsonMapping']",
+									"value": "@json(activity('Lookup1').output.value[0].jsonMapping)",
 									"type": "Expression"
 								}
 							},
@@ -135,7 +135,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
-											"value": "@activity('Lookup1').output.value['sinkTableName']",
+											"value": "@activity('Lookup1').output.value[0].sinkTableName",
 											"type": "Expression"
 										}
 									}
