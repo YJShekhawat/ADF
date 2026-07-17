@@ -1,0 +1,20 @@
+{
+	"name": "Scenario21_Metadata_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "input/Scenario21",
+				"fileSystem": "adfdemo"
+			}
+		},
+		"schema": []
+	}
+}
