@@ -265,12 +265,6 @@
 					},
 					"WebTable_properties_typeProperties_url": {
 						"value": "[parameters('WebTable_properties_typeProperties_url')]"
-					},
-					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
-						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"
-					},
-					"AzureDataLakeStorage242_properties_groupId": {
-						"value": "[parameters('AzureDataLakeStorage242_properties_groupId')]"
 					}
 				}
 			},
@@ -291,6 +285,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"
+					},
+					"AzureDataLakeStorage242_properties_groupId": {
+						"value": "[parameters('AzureDataLakeStorage242_properties_groupId')]"
 					}
 				}
 			},
@@ -391,15 +391,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Event Based Trigger_properties_typeProperties_scope": {
-						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
-					},
-					"EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName": {
-						"value": "[parameters('EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName')]"
-					},
-					"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
-						"value": "[parameters('EventBasedTrigger_SetVariable_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -420,6 +411,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Event Based Trigger_properties_typeProperties_scope": {
+						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
+					},
+					"EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName": {
+						"value": "[parameters('EventBasedTrigger_SetVariable_properties_Set_Variable_Pipeline_parameters_FileName')]"
+					},
+					"EventBasedTrigger_SetVariable_properties_typeProperties_scope": {
+						"value": "[parameters('EventBasedTrigger_SetVariable_properties_typeProperties_scope')]"
 					}
 				}
 			},
