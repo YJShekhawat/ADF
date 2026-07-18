@@ -12,6 +12,17 @@
 						"value": "@contains('67',string(dayOfWeek(utcNow())))",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait2",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Wait1",
