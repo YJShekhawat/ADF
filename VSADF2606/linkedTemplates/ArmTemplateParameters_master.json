@@ -35,6 +35,9 @@
 		"HttpServerLS_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/bharathirajatut/sample-excel-dataset/master/airline.xls"
 		},
+		"LS_Scenario32_properties_typeProperties_url": {
+			"value": "https://reqres.in/api/users"
+		},
 		"RestServiceDynamicOffsetls_properties_typeProperties_url": {
 			"value": "https://pokeapi.co/api/v2/pokemon?limit=20&offset={offset}"
 		},
