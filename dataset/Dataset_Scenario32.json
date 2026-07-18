@@ -1,0 +1,23 @@
+{
+	"name": "Dataset_Scenario32",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Scenario32",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"queryParameters": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().queryParameters",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
