@@ -107,7 +107,8 @@
 												"path": "$['data'][0]['id']"
 											},
 											"sink": {
-												"name": "id"
+												"name": "id",
+												"type": "String"
 											}
 										},
 										{
@@ -115,7 +116,8 @@
 												"path": "$['data'][0]['email']"
 											},
 											"sink": {
-												"name": "email"
+												"name": "email",
+												"type": "String"
 											}
 										},
 										{
@@ -123,7 +125,8 @@
 												"path": "$['data'][0]['first_name']"
 											},
 											"sink": {
-												"name": "first_name"
+												"name": "first_name",
+												"type": "String"
 											}
 										},
 										{
@@ -131,7 +134,8 @@
 												"path": "$['data'][0]['last_name']"
 											},
 											"sink": {
-												"name": "last_name"
+												"name": "last_name",
+												"type": "String"
 											}
 										},
 										{
@@ -139,11 +143,12 @@
 												"path": "$['data'][0]['avatar']"
 											},
 											"sink": {
-												"name": "avatar"
+												"name": "avatar",
+												"type": "String"
 											}
 										}
 									],
-									"mapComplexValuesToString": false
+									"mapComplexValuesToString": true
 								}
 							},
 							"inputs": [
@@ -164,7 +169,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "ApiDataPage@{item()}",
+											"value": "ApiDataPage@{item()}.csv",
 											"type": "Expression"
 										}
 									}
