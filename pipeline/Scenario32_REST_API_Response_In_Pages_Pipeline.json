@@ -42,6 +42,23 @@
 					"isSequential": true,
 					"activities": [
 						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "ItemValue",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						},
+						{
 							"name": "Copy data1",
 							"type": "Copy",
 							"dependsOn": [
@@ -85,7 +102,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Scenario32_Dataset",
+									"referenceName": "Dataset_Scenario32",
 									"type": "DatasetReference",
 									"parameters": {
 										"queryParameters": {
@@ -101,29 +118,12 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "API_Data_Page@{item()}.csv",
+											"value": "ApiDataPage@{item()}",
 											"type": "Expression"
 										}
 									}
 								}
 							]
-						},
-						{
-							"name": "Set variable1",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "ItemValue",
-								"value": {
-									"value": "@item()",
-									"type": "Expression"
-								}
-							}
 						}
 					]
 				}
