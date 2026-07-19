@@ -55,7 +55,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"waterMark": {
-								"value": "'@{activity('Lookup1').output.watermark}'",
+								"value": "'\\'@{activity('Lookup1').output.firstRow.watermark}\\'",
 								"type": "Expression"
 							}
 						},
