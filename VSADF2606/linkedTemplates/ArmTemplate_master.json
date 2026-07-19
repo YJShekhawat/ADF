@@ -262,9 +262,6 @@
 					},
 					"SelfHostedSqlServer_properties_typeProperties_userName": {
 						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_userName')]"
-					},
-					"WebTable_properties_typeProperties_url": {
-						"value": "[parameters('WebTable_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -285,6 +282,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"WebTable_properties_typeProperties_url": {
+						"value": "[parameters('WebTable_properties_typeProperties_url')]"
 					},
 					"AzureDataLakeStorage242_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureDataLakeStorage242_properties_privateLinkResourceId')]"

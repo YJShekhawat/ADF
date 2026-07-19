@@ -30,16 +30,28 @@
 		"SelfHostedSqlServer_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
-		},
-		"WebTable_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://www.careerpower.in/states-and-capitals-of-india.html"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/RestResourceDynamicOffsetDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestServiceDynamicOffsetls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Sales1Dataset')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -658,24 +670,6 @@
 						"type": "SecureString",
 						"value": "[parameters('SelfHostedSqlServer_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "SelfHostedIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WebTable')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Web",
-				"typeProperties": {
-					"url": "[parameters('WebTable_properties_typeProperties_url')]",
-					"authenticationType": "Anonymous"
 				},
 				"connectVia": {
 					"referenceName": "SelfHostedIntegrationRuntime",
