@@ -1,0 +1,29 @@
+{
+	"name": "Scenario43_Dynamic_Expression_SQL_SingleQuotes_Expression_Dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTableDataset",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     waterMark as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: ('SELECT * FROM dbo.demoTable WHERE WaterMark > CONVERT(DATETIME,'+ $waterMark + ')'),",
+				"     format: 'query') ~> source1"
+			]
+		}
+	}
+}
