@@ -35,7 +35,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -55,7 +55,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"waterMark": {
-								"value": "'\\'@{activity('Lookup1').output.firstRow.watermark}\\'",
+								"value": "'@{variables('waterMark')}'",
 								"type": "Expression"
 							}
 						},
@@ -71,8 +71,34 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "waterMark",
+					"value": "\\'@{activity('Lookup1').output.firstRow.watermark}\\'"
+				}
 			}
 		],
+		"variables": {
+			"waterMark": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
