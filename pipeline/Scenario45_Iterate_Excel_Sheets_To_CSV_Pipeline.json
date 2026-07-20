@@ -98,7 +98,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"fileName": {
-											"value": "ExcelSheet_@{variables('counter')}.xlsx",
+											"value": "ExcelSheet_@{variables('counter')}.csv",
 											"type": "Expression"
 										}
 									}
