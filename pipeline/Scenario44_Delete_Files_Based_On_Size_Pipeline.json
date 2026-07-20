@@ -164,6 +164,13 @@
 													}
 												}
 											},
+											"logStorageSettings": {
+												"linkedServiceName": {
+													"referenceName": "AzureDataLakeStorage1",
+													"type": "LinkedServiceReference"
+												},
+												"path": "adf/input/log"
+											},
 											"enableLogging": true,
 											"storeSettings": {
 												"type": "AzureBlobFSReadSettings",
