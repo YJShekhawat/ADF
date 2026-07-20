@@ -129,6 +129,17 @@
 									"value": "@less(activity('Get Metadata2').output.size, 100)",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "Wait1",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 1
+										}
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Delete1",
