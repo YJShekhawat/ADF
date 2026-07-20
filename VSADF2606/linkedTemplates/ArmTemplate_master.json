@@ -244,24 +244,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"SelfHostedSqlServer_password": {
-						"value": "[parameters('SelfHostedSqlServer_password')]"
-					},
-					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
-					},
-					"LS_Scenario32_properties_typeProperties_url": {
-						"value": "[parameters('LS_Scenario32_properties_typeProperties_url')]"
-					},
-					"SelfHostedSqlServer_properties_typeProperties_server": {
-						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_server')]"
-					},
-					"SelfHostedSqlServer_properties_typeProperties_database": {
-						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_database')]"
-					},
-					"SelfHostedSqlServer_properties_typeProperties_userName": {
-						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -282,6 +264,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SelfHostedSqlServer_password": {
+						"value": "[parameters('SelfHostedSqlServer_password')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_connectionString_secretName')]"
+					},
+					"LS_Scenario32_properties_typeProperties_url": {
+						"value": "[parameters('LS_Scenario32_properties_typeProperties_url')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_server": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_server')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_database": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_database')]"
+					},
+					"SelfHostedSqlServer_properties_typeProperties_userName": {
+						"value": "[parameters('SelfHostedSqlServer_properties_typeProperties_userName')]"
 					},
 					"WebTable_properties_typeProperties_url": {
 						"value": "[parameters('WebTable_properties_typeProperties_url')]"
@@ -411,6 +411,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_9')]"
+			]
+		},
+		{
+			"name": "VSADF2606_ArmTemplate_11",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_11.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"Event Based Trigger_properties_typeProperties_scope": {
 						"value": "[parameters('Event Based Trigger_properties_typeProperties_scope')]"
@@ -424,7 +444,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_9')]"
+				"[resourceId('Microsoft.Resources/deployments', 'VSADF2606_ArmTemplate_10')]"
 			]
 		}
 	]
