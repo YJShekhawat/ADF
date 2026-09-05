@@ -1,0 +1,15 @@
+{
+	"name": "vssdf1",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "071414df-6bca-42ad-ada5-a42a922a3ec3",
+		"tenantId": "c3855111-1bf4-4e4c-a4e2-b87ecfcbee95"
+	}
+}
